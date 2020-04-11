@@ -1,0 +1,25 @@
+{
+  "name": "aeons-end-randomizer-data-generator",
+  "version": "1.0.0",
+  "description": "TBD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loganmzz/aeons-end-randomizer-data-generator.git"
+  },
+  "keywords": [
+    "aeonsend"
+  ],
+  "author": "Logan Mzz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loganmzz/aeons-end-randomizer-data-generator/issues"
+  },
+  "homepage": "https://github.com/loganmzz/aeons-end-randomizer-data-generator#readme",
+  "dependencies": {
+    "googleapis": "^39.2.0"
+  }
+}
