@@ -20,13 +20,13 @@ class SheetType {
     }
 }
 const SheetTypes = {
-    Nemesis:  new SheetType('Nemesis', 'nemesis' , row => new RawNemesis(row)),
+    Nemeses:  new SheetType('Nemesis', 'nemeses' , row => new RawNemesis(row)),
     Mages:    new SheetType('Mages'  , 'mages'   , row => new RawMage(row)),
     Starters: new SheetType('Départ' , 'starters', row => new RawCard(row)),
     Cards:    new SheetType('Cartes' , 'cards'   , row => new RawCard(row)),
 
     all: function() {
-        return [this.Nemesis, this.Mages, this.Starters, this.Cards];
+        return [this.Nemeses, this.Mages, this.Starters, this.Cards];
     }
 };
 
@@ -37,7 +37,7 @@ class RawExpansion {
         this.id             = id;
         this.type           = type;
 
-        this.nemesis  = [];
+        this.nemeses  = [];
         this.mages    = [];
         this.starters = [];
         this.cards    = [];
