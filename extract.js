@@ -104,6 +104,8 @@ class RawSheetDescription {
 }
 
 module.exports = function(auth) {
+    console.log('[EXTRACT] Start');
+
     const expansions = [];
     return google.sheets('v4').spreadsheets.values.get({auth, spreadsheetId, range: 'Expansions'})
                  .then(expansionSheet => {
@@ -123,5 +125,8 @@ module.exports = function(auth) {
                         )
                     );
                 })
-                .then(_ => expansions);
+                .then(_ => {
+                    console.log('[EXTRACT] End');
+                    return expansions
+                });
 };

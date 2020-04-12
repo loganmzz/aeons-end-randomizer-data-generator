@@ -98,4 +98,9 @@ tx.card    = (ctx, src) => new ICard({
     keywords: [],
 });
 
-module.exports = (expansions) => tx.expansions({src: {}}, expansions);
+module.exports = (expansions) => {
+    console.log('[TRANSFORM] Start');
+    const data = tx.expansions({src: {}}, expansions);
+    console.log('[TRANSFORM] End');
+    return data;
+}
