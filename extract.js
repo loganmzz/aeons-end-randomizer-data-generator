@@ -42,6 +42,14 @@ class RawExpansion {
         this.starters = [];
         this.cards    = [];
     }
+
+    startersById() {
+        if (this.__startersById === undefined) {
+            this.__startersById = {};
+            this.starters.forEach(starter => { this.__startersById[starter.id] = starter; });
+        }
+        return this.__startersById;
+    }
 }
 
 class RawNemesis {

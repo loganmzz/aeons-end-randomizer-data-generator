@@ -85,7 +85,7 @@ tx.mage    = (ctx, src) => new Mage({
     mageTitle: src.title,
     ability: src.ability,
     numberOfCharges: parseInt(src.charge),
-    uniqueStarters: [],
+    uniqueStarters: src.startersId.split('\n').map(id => tx.card(ctx, ctx.src.expansion.startersById()[id])),
 });
 
 tx.card    = (ctx, src) => new ICard({
