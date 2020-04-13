@@ -104,9 +104,40 @@ tx.card    = (ctx, src) => new ICard({
     name: src.translatedName,
     id: src.id,
     cost: parseInt(src.cost),
-    effect: src.effect,
+    effect: tx.cardEffect(src),
     keywords: [],
 });
+
+tx.cardEffect = (card) => {
+    let effect = '<p>\n';
+    try {
+        if (card.type == 'Spell') {
+            const blocks = card.effect.split('---\n');
+            switch (blocks.length) {
+                case 1:
+                    effect += tx.text(blocks[0]);
+                    break;
+                case 3:
+                    effect += `${tx.text(blocks[1])}<br/>\n<b>Lancer :</b> ${tx.text(blocks[2])}`;
+                    break;
+                default:
+                    console.error(`Invalid card effect for ${card.id}. Only two sections supported for Spell effect.`);
+                    effect += tx.text(card.effect);
+            }
+        } else {
+            effect += tx.text(card.effect);
+        }
+    } catch (e) {
+        console.error(`Invalid card effect for '${card.id}'.`, e);
+    }
+    effect += '\n</p>';
+    return effect;
+}
+
+tx.text = (str) => str.replace(/\n/g, '<br/>')
+                      .replace(/<br\/>OU<br\/>/g, '\n<span class="or">OU</span>\n')
+                      .replace(/\$/g, '<span class="aether">&AElig;</span>')
+;
 
 module.exports = (expansions) => {
     console.log('[TRANSFORM] Start');
