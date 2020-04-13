@@ -83,10 +83,20 @@ tx.mage    = (ctx, src) => new Mage({
     name: src.translatedName,
     id: src.id,
     mageTitle: src.title,
-    ability: src.ability,
+    ability: tx.mageAbility(src.ability),
     numberOfCharges: parseInt(src.charge),
     uniqueStarters: src.startersId.split('\n').map(id => tx.card(ctx, ctx.src.expansion.startersById()[id])),
 });
+
+tx.mageAbility = (src) => {
+    const lines = src.split('\n');
+    let ability = `<h2>${lines[0]}</h2>\n<p class="ability-activation">${lines[1]}</p>\n<p>${lines[2]}`;
+    if (lines.length == 4) {
+        ability += `\n<span class="hint">${lines[3]}</span>`;
+    }
+    ability += '</p>';
+    return ability;
+}
 
 tx.card    = (ctx, src) => new ICard({
     expansion: ctx.src.expansion.id, 
