@@ -72,7 +72,7 @@ tx.nemesis = (ctx, src) => new Nemesis({
     expansion: ctx.src.expansion.id,
     name: src.translatedName,
     id: src.id,
-    health: parseInt(src.id),
+    health: parseInt(src.health),
     difficulty: parseInt(src.difficulty),
     expeditionRating: parseInt(src.expeditionRating),
     additionalInfo: src.additionalInfo,
