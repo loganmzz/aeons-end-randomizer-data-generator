@@ -40,7 +40,7 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { IExpansionData } from \'types\'').ln().ln();
+        content.str('import { IExpansionData } from \'aer-types\'').ln().ln();
 
         expansions.forEach(e => {
             content.str('import { ')
@@ -73,10 +73,10 @@ const ld = {
     expansionIndex: e => {
         const file = `${outdir}/${e.id.toLowerCase()}/index.ts`;
         console.log(`[LOAD] Generate ${file}`);
-        
+
         const content = new StringBuilder();
 
-        content.str('import { IExpansion } from \'types\'').ln().ln();
+        content.str('import { IExpansion } from \'aer-types\'').ln().ln();
 
         content.str('import { nemeses } from \'./nemeses\'').ln();
         content.str('import { mages } from \'./mages\'').ln();
@@ -102,7 +102,7 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { Nemesis } from \'types\'').ln().ln()
+        content.str('import { Nemesis } from \'aer-types\'').ln().ln()
                .str('export const nemeses: Nemesis[] = [').ln();
         nemeses.forEach(nemesis => content.json(nemesis, '  ').str(',').ln());
         content.str(']').ln();
@@ -115,7 +115,7 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { Mages } from \'types\'').ln().ln()
+        content.str('import { Mages } from \'aer-types\'').ln().ln()
                .str('export const mages: Mages[] = [').ln();
         mages.forEach(mage => content.json(mage, '  ').str(',').ln());
         content.str(']').ln();
@@ -128,7 +128,7 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { ICard } from \'types\'').ln().ln()
+        content.str('import { ICard } from \'aer-types\'').ln().ln()
                .str('export const cards: ICard[] = [').ln();
         cards.forEach(card => content.json(card, '  ').str(',').ln());
         content.str(']').ln();
@@ -141,7 +141,7 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { BasicNemesisCard } from \'types/data\'').ln().ln()
+        content.str('import { BasicNemesisCard } from \'aer-types\'').ln().ln()
                .str('export const basicNemesisCards: BasicNemesisCard[] = [').ln();
         basicNemesisCards.forEach(card => content.json(card, '  ').str(',').ln());
         content.str(']').ln();
