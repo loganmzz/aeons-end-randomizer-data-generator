@@ -60,7 +60,7 @@ class RawNemesis {
         this.health                = health;
         this.difficulty            = difficulty;
         this.expeditionRating      = expeditionRating;
-        this.additionalInformation = additionalInformation;
+        this.additionalInformation = additionalInformation || '';
     }
 }
 

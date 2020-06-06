@@ -15,14 +15,14 @@ class IExpansion {
 }
 
 class Nemesis {
-    constructor({expansion, name, id, health, difficulty, expeditionRating, additionalInfo}) {
+    constructor({expansion, name, id, health, difficulty, additionalInfo, expeditionRating}) {
         this.expansion        = expansion;
         this.name             = name;
         this.id               = id;
         this.health           = health;
         this.difficulty       = difficulty;
-        this.expeditionRating = expeditionRating;
         this.additionalInfo   = additionalInfo;
+        this.expeditionRating = expeditionRating;
     }
 }
 
@@ -76,8 +76,8 @@ tx.nemesis = (ctx, src) => new Nemesis({
     id: src.id,
     health: parseInt(src.health),
     difficulty: parseInt(src.difficulty),
+    additionalInfo: src.additionalInformation || '',
     expeditionRating: parseInt(src.expeditionRating),
-    additionalInfo: src.additionalInfo,
 });
 
 tx.mage    = (ctx, src) => new Mage({
