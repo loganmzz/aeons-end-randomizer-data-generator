@@ -2,10 +2,11 @@
 class IExpansionData {}
 
 class IExpansion {
-    constructor({id, name, type, nemeses, mages, cards, basicNemesisCards}) {
+    constructor({id, name, type, originalName, nemeses, mages, cards, basicNemesisCards}) {
         this.id                = id;
         this.name              = name;
         this.type              = type;
+        this.originalName      = originalName;
         this.nemeses           = nemeses;
         this.mages             = mages;
         this.cards             = cards;
@@ -61,6 +62,7 @@ tx.expansion = (ctx, src) => {
     ctx.src.expansion = src;
     return new IExpansion({
         id: src.id, name: src.translatedName, type: src.type,
+        originalName: src.originalName,
         nemeses: src.nemeses.map(n => tx.nemesis(ctx, n)),
         mages: src.mages.map(m => tx.mage(ctx, m)),
         cards: src.cards.map(c => tx.card(ctx, c)),

@@ -34,6 +34,13 @@ class StringBuilder {
 }
 
 const ld = {
+    expansionDirname: expansion => {
+        let name = expansion.originalName;
+        let fstLetter = name[0].toLowerCase();
+        let remainder = name.slice(1).replace(/[' ]/g, '');
+        return `${fstLetter}${remainder}`;
+    },
+    expansionDir: expansion => `${outdir}/${ld.expansionDirname(expansion)}`,
     rootIndex: expansions => {
         const file = `${outdir}/index.ts`;
         console.log(`[LOAD] Generate ${file}`);
@@ -46,7 +53,7 @@ const ld = {
             content.str('import { ')
                    .str(e.id.toLowerCase())
                    .str('Data } from \'./')
-                   .str(e.id.toLowerCase())
+                   .str(ld.expansionDirname(e))
                    .str('\'')
                    .ln();
         });
@@ -63,7 +70,7 @@ const ld = {
         expansions.forEach(ld.expansion);
     },
     expansion: expansion => {
-        fs.mkdirSync(`${outdir}/${expansion.id.toLowerCase()}`, {recursive: true});
+        fs.mkdirSync(`${ld.expansionDir(expansion)}`, {recursive: true});
         ld.expansionIndex(expansion);
         ld.nemeses(expansion, expansion.nemeses);
         ld.mages(expansion, expansion.mages);
@@ -71,7 +78,7 @@ const ld = {
         ld.basicNemesisCards(expansion, expansion.basicNemesisCards);
     },
     expansionIndex: e => {
-        const file = `${outdir}/${e.id.toLowerCase()}/index.ts`;
+        const file = `${ld.expansionDir(e)}/index.ts`;
         console.log(`[LOAD] Generate ${file}`);
 
         const content = new StringBuilder();
@@ -97,7 +104,7 @@ const ld = {
         fs.writeFileSync(file, content);
     },
     nemeses: (e, nemeses) => {
-        const file = `${outdir}/${e.id.toLowerCase()}/nemeses.ts`;
+        const file = `${ld.expansionDir(e)}/nemeses.ts`;
         console.log(`[LOAD] Generate ${file}`);
 
         const content = new StringBuilder();
@@ -110,7 +117,7 @@ const ld = {
         fs.writeFileSync(file, content);
     },
     mages: (e, mages) => {
-        const file = `${outdir}/${e.id.toLowerCase()}/mages.ts`;
+        const file = `${ld.expansionDir(e)}/mages.ts`;
         console.log(`[LOAD] Generate ${file}`);
 
         const content = new StringBuilder();
@@ -123,7 +130,7 @@ const ld = {
         fs.writeFileSync(file, content);
     },
     cards: (e, cards) => {
-        const file = `${outdir}/${e.id.toLowerCase()}/cards.ts`;
+        const file = `${ld.expansionDir(e)}/cards.ts`;
         console.log(`[LOAD] Generate ${file}`);
 
         const content = new StringBuilder();
@@ -136,7 +143,7 @@ const ld = {
         fs.writeFileSync(file, content);
     },
     basicNemesisCards: (e, basicNemesisCards) => {
-        const file = `${outdir}/${e.id.toLowerCase()}/basicNemesisCards.ts`;
+        const file = `${ld.expansionDir(e)}/basicNemesisCards.ts`;
         console.log(`[LOAD] Generate ${file}`);
 
         const content = new StringBuilder();
