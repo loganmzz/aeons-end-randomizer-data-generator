@@ -127,8 +127,8 @@ const ld = {
 
         const content = new StringBuilder();
 
-        content.str('import { Mages } from \'aer-types\'').ln().ln()
-               .str('export const mages: Mages[] = [').ln();
+        content.str('import { Mage } from \'aer-types\'').ln().ln()
+               .str('export const mages: Mage[] = [').ln();
         mages.forEach(mage => content.json(mage, '  ').str(',').ln());
         content.str(']').ln();
 
