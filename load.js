@@ -1,4 +1,6 @@
-const outdir = './DATA/FR';
+const lang='FR';
+const outdir = `./DATA/${lang}`;
+
 
 const fs = require('fs');
 
@@ -58,9 +60,12 @@ const ld = {
                    .ln();
         });
 
-        content.ln().str('export const DATA: IExpansionData = {').ln();
+        content.ln().str('const ').str(lang).str(': IExpansionData = {').ln();
         expansions.forEach(e => content.str(`  ${e.id}: ${e.id.toLowerCase()}Data,`).ln());
-        content.str('}').ln();
+        content
+            .str('}').ln()
+            .ln()
+            .str('export default ').str(lang).ln();
 
         fs.writeFileSync(file, content);
     },
