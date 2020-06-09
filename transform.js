@@ -92,6 +92,9 @@ tx.mage    = (ctx, src) => new Mage({
 
 tx.mageAbility = (src) => {
     const lines = src.split('\n');
+    if (lines.length < 3) {
+        return src;
+    }
     let ability = `<h2>${lines[0]}</h2>\n<p class="ability-activation">${lines[1]}</p>\n<p>${lines[2]}`;
     if (lines.length == 4) {
         ability += `\n<span class="hint">${lines[3]}</span>`;
@@ -101,7 +104,7 @@ tx.mageAbility = (src) => {
 }
 
 tx.card    = (ctx, src) => new ICard({
-    expansion: ctx.src.expansion.id, 
+    expansion: ctx.src.expansion.id,
     type: src.type,
     name: src.translatedName,
     id: src.id,
@@ -112,34 +115,43 @@ tx.card    = (ctx, src) => new ICard({
 
 tx.cardEffect = (card) => {
     let effect = '<p>\n';
-    try {
-        if (card.type == 'Spell') {
-            const blocks = card.effect.split('---\n');
-            switch (blocks.length) {
-                case 1:
-                    effect += tx.text(blocks[0]);
-                    break;
-                case 3:
-                    effect += `${tx.text(blocks[1])}<br/>\n<b>Lancer :</b> ${tx.text(blocks[2])}`;
-                    break;
-                default:
-                    console.error(`Invalid card effect for ${card.id}. Only two sections supported for Spell effect.`);
-                    effect += tx.text(card.effect);
+    if (card.effect) {
+        try {
+            if (card.type == 'Spell') {
+                const blocks = card.effect.split('---\n');
+
+                let spellGeneral = '';
+                let spellCast = '';
+                switch (blocks.length) {
+                    case 1:
+                        spellCast = blocks[0];
+                        break;
+                    case 3:
+                        spellGeneral = blocks[1];
+                        spellCast = blocks[2];
+                        break;
+                    default:
+                        console.error(`Invalid card effect for ${card.id}. Only two sections supported for Spell effect.`);
+                        effect += tx.text(card.effect);
+                }
+                if (spellGeneral) {
+                    effect += `${tx.text(spellGeneral)}<br/>\n`;
+                }
+                if (spellCast) {
+                    effect += spellCast.split(/\nOU\n/g).map(sc => `<b>Lancer :</b> ${tx.text(sc)}`).join('\n<span class="or">OU</span>\n');
+                }
+            } else {
+                effect += tx.text(card.effect);
             }
-        } else {
-            effect += tx.text(card.effect);
+        } catch (e) {
+            console.error(`Invalid card effect for '${card.id}'.`, e);
         }
-    } catch (e) {
-        console.error(`Invalid card effect for '${card.id}'.`, e);
     }
     effect += '\n</p>';
     return effect;
 }
 
-tx.text = (str) => str.replace(/\n/g, '<br/>')
-                      .replace(/<br\/>OU<br\/>/g, '\n<span class="or">OU</span>\n')
-                      .replace(/\$/g, '<span class="aether">&AElig;</span>')
-;
+tx.text = (str) => str.replace(/\n/g, '<br/>\n').replace(/<br\/>\nOU<br\/>\n/g, '\n<span class="or">OU</span>\n').replace(/\$/g, '<span class="aether">&AElig;</span>');
 
 module.exports = (expansions) => {
     console.log('[TRANSFORM] Start');
